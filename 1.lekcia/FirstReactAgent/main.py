@@ -29,7 +29,6 @@ def main():
             result = agent.run(conversation_history,client)
             conversation_history.append({"role":"assistant","content": result})
 
-            print(conversation_history)
         except KeyboardInterrupt:
             print("\n\n👋 Thanks for using the Educational Database Tools AI Agent!")
             break

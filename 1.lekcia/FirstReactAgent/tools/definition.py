@@ -3,7 +3,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "get_current_temperature",
-            "description": "Use this function to get the current price of a stock.",
+            "description": "Use this function to get the current temperature in requested city.",
             "parameters": {
                 "type": "object",
                 "properties": {
