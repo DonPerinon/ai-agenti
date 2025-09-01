@@ -3,7 +3,6 @@ import json
 
 from typing import List, Dict, Any
 from openai import OpenAI
-
 from tools.definition import tools
 from tools.mapper import available_functions
 import tools.implementation

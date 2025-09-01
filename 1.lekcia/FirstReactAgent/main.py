@@ -14,7 +14,7 @@ client = OpenAI(
 )
 
 
-conversation_history = [{"role": "system", "content": "You are helpfull assistant"}]
+conversation_history = [{"role": "system", "content": "You are helpfull assistant, answer allways in same language as question is asked, temperature response in °C"}]
 
 def main():
     agent = ReactAgent()
