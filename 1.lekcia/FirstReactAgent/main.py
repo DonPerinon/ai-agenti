@@ -14,7 +14,10 @@ client = OpenAI(
 )
 
 
-conversation_history = [{"role": "system", "content": "You are helpfull assistant, answer allways in same language as question is asked, temperature response in °C"}]
+conversation_history = [{"role": "system", "content": 
+                         "You are helpfull assistant, answer allways in same language as question is asked, temperature response in °C"
+                         "In case of next question on next monday/friday refer to next week day not the closes"
+                         }]
 
 def main():
     agent = ReactAgent()
@@ -26,7 +29,7 @@ def main():
                 print("\n👋 Thanks for using the Educational Database Tools AI Agent!")
                 break
             conversation_history.append({"role": "user", "content": user_input})
-            result = agent.run(conversation_history,client)
+            result = agent.interact(conversation_history,client)
             conversation_history.append({"role":"assistant","content": result})
 
         except KeyboardInterrupt:

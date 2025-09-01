@@ -9,39 +9,35 @@ import tools.implementation
 from functions.openai import call_openai
 
 class ReactAgent:
-    """A ReAct (Reason and Act) agent that handles multiple tool calls."""
+    """
+    A lightweight agent using a ReAct-style loop:
+    - Queries the model
+    - Executes any requested tools
+    - Feeds results back until only text is returned
+    """
 
-    def __init__(self, model: str = "gpt-4o"):
+    def __init__(self, model: str = "gpt-4o", max_rounds: int = 8):
         self.model = model
-        self.max_iterations = 10  # Prevent infinite loops
+        self.max_rounds = max_rounds
 
-    def run(self, messages: List[Dict[str, Any]], client: OpenAI) -> str:
-        """
-        Run the ReAct loop until we get a final answer.
+    def interact(self, history: List[Dict[str, Any]], client: OpenAI) -> str:
+        rounds = 0
 
-        The agent will:
-        1. Call the LLM
-        2. If tool calls are returned, execute them
-        3. Add results to conversation and repeat
-        4. Continue until LLM returns only text (no tool calls)
-        """
-        iteration = 0
+        while rounds < self.max_rounds:
+            rounds += 1
+            print(f"\n>>> Round {rounds}")
 
-        while iteration < self.max_iterations:
-            iteration += 1
-            print(f"\n--- Iteration {iteration} ---")
-        
-            # Call the LLM
-            response = call_openai(messages,client)
-            response_message = response.choices[0].message
+            # Query the LLM
+            reply = call_openai(history, client)
+            message = reply.choices[0].message
 
-            # Check if there are tool calls
-            if response_message.tool_calls:
-                # Add the assistant's message with tool calls to history
-                messages.append(
+            # If model asks for tools
+            if getattr(message, "tool_calls", None):
+                # Log the tool calls in the conversation
+                history.append(
                     {
                         "role": "assistant",
-                        "content": response_message.content,
+                        "content": message.content,
                         "tool_calls": [
                             {
                                 "id": tc.id,
@@ -51,47 +47,42 @@ class ReactAgent:
                                     "arguments": tc.function.arguments,
                                 },
                             }
-                            for tc in response_message.tool_calls
+                            for tc in message.tool_calls
                         ],
                     }
                 )
 
-                # Process ALL tool calls (not just the first one)
-                for tool_call in response_message.tool_calls:
-                    function_name = tool_call.function.name
-                    function_args = json.loads(tool_call.function.arguments)
-                    tool_id = tool_call.id
+                # Execute each requested tool
+                for call in message.tool_calls:
+                    fn_name = call.function.name
+                    fn_args = json.loads(call.function.arguments)
+                    call_id = call.id
 
-                    print(f"Executing tool: {function_name}({function_args})")
+                    print(f"Calling: {fn_name} with {fn_args}")
 
-                    # Call the function
-                    function_to_call = available_functions[function_name]
-                    function_response = function_to_call(**function_args)
+                    # Look up and run the function
+                    fn = available_functions[fn_name]
+                    result = fn(**fn_args)
 
-                    print(f"Tool result: {function_response}")
+                    print(f"Result: {result}")
 
-                    # Add tool response to messages
-                    messages.append(
+                    # Store tool response back in history
+                    history.append(
                         {
                             "role": "tool",
-                            "tool_call_id": tool_id,
-                            "name": function_name,
-                            "content": json.dumps(function_response),
+                            "tool_call_id": call_id,
+                            "name": fn_name,
+                            "content": json.dumps(result),
                         }
                     )
 
-                # Continue the loop to get the next response
-                continue
+                continue  # Go to next loop
 
-            else:
-                # No tool calls - we have our final answer
-                final_content = response_message.content
+            # If no tool calls, final output
+            answer = message.content
+            history.append({"role": "assistant", "content": answer})
 
-                # Add the final assistant message to history
-                messages.append({"role": "assistant", "content": final_content})
+            print(f"\nFinal Response: {answer}")
+            return answer
 
-                print(f"\nFinal answer: {final_content}")
-                return final_content
-
-        # If we hit max iterations, return an error
-        return "Error: Maximum iterations reached without getting a final answer."
+        return "Error: Stopped after too many rounds without resolution."
