@@ -1,4 +1,4 @@
-# firstreactagent
+# Firstreactagent
 
 A small Python project that demos calling OpenAI’s Chat Completions API with **function calling (tools)** to fetch weather data and convert temperatures.
 
