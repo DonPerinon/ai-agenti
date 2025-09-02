@@ -75,7 +75,7 @@ def get_city_forecast(city: str):
     
     soup = BeautifulSoup(r.text, "html.parser")
     
-    # Find the 7-day forecast table
+    # Find the 14-day forecast table
     forecast_table = soup.find("table", attrs={"id": "wt-ext"})
     if not forecast_table:
         return {"error": "Tabulka s předpovědí nenalezena."}

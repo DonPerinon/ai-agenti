@@ -3,7 +3,6 @@ import json
 from openai import OpenAI
 from dotenv import load_dotenv
 
-from functions.openai import call_openai
 from classes.ReactAgent import ReactAgent
 
 
