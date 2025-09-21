@@ -11,8 +11,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        1536,
-        112
+        1592,
+        -88
       ],
       "id": "8fd2c18d-5ac9-4a5b-8ffd-89dc2aa5171c",
       "name": "AI Agent"
@@ -30,7 +30,7 @@
       "typeVersion": 1.2,
       "position": [
         1152,
-        336
+        136
       ],
       "id": "c9746774-926a-4dd0-905e-724aa2ed46dc",
       "name": "OpenAI Chat Model",
@@ -47,7 +47,7 @@
       "typeVersion": 1.3,
       "position": [
         1280,
-        336
+        136
       ],
       "id": "b007ee6c-cd39-4316-b420-d6f023c6dbac",
       "name": "Simple Memory"
@@ -65,7 +65,7 @@
       "typeVersion": 2.6,
       "position": [
         480,
-        112
+        -88
       ],
       "id": "859f8d8b-2bb9-46fc-9d0e-d51d5c125334",
       "name": "Execute a SQL query1",
@@ -134,7 +134,7 @@
       "typeVersion": 3.2,
       "position": [
         704,
-        112
+        -88
       ],
       "id": "87ae7eda-be71-4676-b90f-66463793c18e",
       "name": "Switch"
@@ -147,7 +147,7 @@
       "typeVersion": 1.3,
       "position": [
         256,
-        112
+        -88
       ],
       "id": "6025ced3-f3a5-4eb9-abda-0d6fca122d31",
       "name": "InputChat",
@@ -183,7 +183,7 @@
       "typeVersion": 2.6,
       "position": [
         1408,
-        336
+        136
       ],
       "id": "dab4e2ed-a370-4b8b-ab8e-0e595354ad88",
       "name": "Get user detail",
@@ -224,7 +224,7 @@
       "typeVersion": 2.6,
       "position": [
         1536,
-        336
+        136
       ],
       "id": "50412a16-9620-41d2-b56f-2242d20f781f",
       "name": "Orders list",
@@ -245,7 +245,7 @@
       "typeVersion": 2.6,
       "position": [
         928,
-        32
+        -160
       ],
       "id": "9dcf6352-eade-4e75-8f43-d42cefc11bb6",
       "name": "DefaultDataMock",
@@ -263,15 +263,15 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2256,
-        112
+        2384,
+        -88
       ],
       "id": "b1b1ddad-dfa8-435f-a753-2983dfa5f16b",
       "name": "Code in JavaScript"
     },
     {
       "parameters": {
-        "content": "## Simple order assistant\nprovides responses about orders using mock data."
+        "content": "## Simple order assistant\nprovides responses about orders using mock data.\nUser can create account and order an item, list orders etc."
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -304,16 +304,21 @@
             {
               "column": "product_name",
               "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', `Name of requested item to delete.`, 'string') }}"
+            },
+            {
+              "column": "user_id",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values1_Value', `User id from users db`, 'string') }}"
             }
           ]
         },
+        "combineConditions": "OR",
         "options": {}
       },
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
         1664,
-        336
+        136
       ],
       "id": "e26a321c-58ea-4050-8517-a50aff639bb8",
       "name": "Delete order",
@@ -332,7 +337,7 @@
       "typeVersion": 1,
       "position": [
         1792,
-        336
+        136
       ],
       "id": "74e7fb3a-1288-4d10-ad86-61417d3f3add",
       "name": "SerpAPI",
@@ -437,7 +442,7 @@
       "typeVersion": 2.6,
       "position": [
         1920,
-        336
+        136
       ],
       "id": "73c1fc16-630b-4ca4-bc44-2be7caf5d29d",
       "name": "Create order",
@@ -522,7 +527,7 @@
       "typeVersion": 2.6,
       "position": [
         2048,
-        336
+        136
       ],
       "id": "4899b0ec-2e0e-4b6a-8752-21c5beaa713b",
       "name": "Create user",
@@ -569,8 +574,8 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        2160,
-        352
+        2176,
+        136
       ],
       "id": "44cbe89a-92b1-4ac4-b45b-45a1b27cd099",
       "name": "Get user ids",
