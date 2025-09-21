@@ -5,16 +5,16 @@
         "promptType": "define",
         "text": "={{ $('InputChat').item.json.chatInput }}",
         "options": {
-          "systemMessage": "\"You are a helpful assistant. Respond based on user input and do not use tools when unnecessary.\""
+          "systemMessage": "\"You are a helpful assistant.\nRespond based on user input and do not use tools when unnecessary.\nPrices for products and product detail get using SerpAPI tool, \""
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        816,
-        -96
+        1472,
+        112
       ],
-      "id": "d61b2a79-6bba-452d-8934-abeb67ea9fc6",
+      "id": "8fd2c18d-5ac9-4a5b-8ffd-89dc2aa5171c",
       "name": "AI Agent"
     },
     {
@@ -29,10 +29,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        688,
-        128
+        1152,
+        336
       ],
-      "id": "1d19a667-0bf9-4ede-99ff-ed794189407a",
+      "id": "c9746774-926a-4dd0-905e-724aa2ed46dc",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -46,10 +46,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        816,
-        128
+        1280,
+        336
       ],
-      "id": "c70241cc-3d7d-4269-8011-cec70cc46720",
+      "id": "b007ee6c-cd39-4316-b420-d6f023c6dbac",
       "name": "Simple Memory"
     },
     {
@@ -64,10 +64,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        -432,
-        -96
+        480,
+        112
       ],
-      "id": "6e9e5ec2-2047-4145-a299-bd8087e2e34d",
+      "id": "859f8d8b-2bb9-46fc-9d0e-d51d5c125334",
       "name": "Execute a SQL query1",
       "credentials": {
         "postgres": {
@@ -133,10 +133,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -208,
-        -96
+        704,
+        112
       ],
-      "id": "cafa7f8e-9e85-4bc9-8af4-07c759a60f99",
+      "id": "87ae7eda-be71-4676-b90f-66463793c18e",
       "name": "Switch"
     },
     {
@@ -146,10 +146,10 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.3,
       "position": [
-        -656,
-        -96
+        256,
+        112
       ],
-      "id": "6b20385e-7e64-4f5d-bbaa-f0f8ffc92d00",
+      "id": "6025ced3-f3a5-4eb9-abda-0d6fca122d31",
       "name": "InputChat",
       "webhookId": "b61c39a7-61c9-4afc-a57f-52a3ef4971e0"
     },
@@ -182,10 +182,10 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        944,
-        128
+        1408,
+        336
       ],
-      "id": "db9115db-f14c-439f-9586-9b152df6992b",
+      "id": "dab4e2ed-a370-4b8b-ab8e-0e595354ad88",
       "name": "Get user detail",
       "credentials": {
         "postgres": {
@@ -223,10 +223,10 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        1072,
-        128
+        1536,
+        336
       ],
-      "id": "dc195e40-a1a1-4887-9808-6696b79b5e1c",
+      "id": "50412a16-9620-41d2-b56f-2242d20f781f",
       "name": "Orders list",
       "credentials": {
         "postgres": {
@@ -244,10 +244,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        240,
-        -192
+        928,
+        32
       ],
-      "id": "df3bc8c5-70a9-4231-9fe9-b9758d0aaa84",
+      "id": "9dcf6352-eade-4e75-8f43-d42cefc11bb6",
       "name": "DefaultDataMock",
       "credentials": {
         "postgres": {
@@ -263,10 +263,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1280,
-        -96
+        2128,
+        112
       ],
-      "id": "f8315bcf-411a-4e5f-bfbe-10a3b82dab31",
+      "id": "b1b1ddad-dfa8-435f-a753-2983dfa5f16b",
       "name": "Code in JavaScript"
     },
     {
@@ -275,11 +275,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -912,
-        -224
+        0,
+        0
       ],
       "typeVersion": 1,
-      "id": "1b0fa7de-f2fb-4445-afc0-9914b896966c",
+      "id": "5452a2f4-76ab-4a39-bedf-3ea6f76f98de",
       "name": "Sticky Note"
     },
     {
@@ -312,11 +312,135 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        1184,
-        112
+        1664,
+        336
       ],
-      "id": "a5f5c849-a6f9-4c23-b135-13997fd66ded",
+      "id": "e26a321c-58ea-4050-8517-a50aff639bb8",
       "name": "Delete order",
+      "credentials": {
+        "postgres": {
+          "id": "Pl0stePkJmGF26ro",
+          "name": "Postgres account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        1792,
+        336
+      ],
+      "id": "74e7fb3a-1288-4d10-ad86-61417d3f3add",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "K1ERSjWXW7jNc1zX",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Create or update order based on user input",
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "orders",
+          "mode": "list",
+          "cachedResultName": "orders"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "user_id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('user_id', ``, 'number') }}",
+            "product_name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('product_name', ``, 'string') }}",
+            "price": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('price', ``, 'number') }}",
+            "quantity": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('quantity', ``, 'number') }}",
+            "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id__using_to_match_', ``, 'number') }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "product_name",
+              "displayName": "product_name",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "quantity",
+              "displayName": "quantity",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "order_date",
+              "displayName": "order_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        1920,
+        336
+      ],
+      "id": "73c1fc16-630b-4ca4-bc44-2be7caf5d29d",
+      "name": "Create order",
       "credentials": {
         "postgres": {
           "id": "Pl0stePkJmGF26ro",
@@ -442,11 +566,32 @@
           }
         ]
       ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create order": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "pinData": {},
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "d4d69bfb25a6c0d232d077ff52788a850e9474ba40b33e5f6bc246cbf086a076"
   }
 }
