@@ -1,0 +1,431 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "\"You are a helpful assistant. Respond based on user input and do not use tools when unnecessary.\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "d61b2a79-6bba-452d-8934-abeb67ea9fc6",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        208
+      ],
+      "id": "1d19a667-0bf9-4ede-99ff-ed794189407a",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "2oSLWXj8MV7nGafu",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1,
+      "position": [
+        560,
+        0
+      ],
+      "id": "c0af23dc-7158-4a20-9a3f-ba6ba5cc2797",
+      "name": "Respond to Chat"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        304
+      ],
+      "id": "c70241cc-3d7d-4269-8011-cec70cc46720",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT EXISTS (\n    SELECT 1 \n    FROM information_schema.tables \n    WHERE table_schema = 'public' \n      AND table_name = 'orders'\n) AS table_exists;\n",
+        "options": {
+          "queryReplacement": "",
+          "replaceEmptyStrings": true
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -448,
+        64
+      ],
+      "id": "6e9e5ec2-2047-4145-a299-bd8087e2e34d",
+      "name": "Execute a SQL query1",
+      "credentials": {
+        "postgres": {
+          "id": "Pl0stePkJmGF26ro",
+          "name": "Postgres account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.table_exists }}",
+                    "rightValue": "false",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "false",
+                      "singleValue": true
+                    },
+                    "id": "9610becf-020f-4e9a-9149-e1cb5d543f23"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ada38b14-89e3-49ac-90f5-60a8b3a9da03",
+                    "leftValue": "={{ $json.table_exists }}",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -256,
+        64
+      ],
+      "id": "cafa7f8e-9e85-4bc9-8af4-07c759a60f99",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseMode": "responseNodes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -656,
+        64
+      ],
+      "id": "6b20385e-7e64-4f5d-bbaa-f0f8ffc92d00",
+      "name": "InputChat",
+      "webhookId": "b61c39a7-61c9-4afc-a57f-52a3ef4971e0"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get user_id based on name defined in input for orders\n users (\n    id SERIAL PRIMARY KEY,\n    name VARCHAR(50) NOT NULL,\n    email VARCHAR(100) UNIQUE NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);",
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "users",
+          "mode": "list",
+          "cachedResultName": "users"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "name",
+              "condition": "LIKE",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', `name is allways with upper firster letter for name and surname`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        480,
+        288
+      ],
+      "id": "db9115db-f14c-439f-9586-9b152df6992b",
+      "name": "Get user detail",
+      "credentials": {
+        "postgres": {
+          "id": "Pl0stePkJmGF26ro",
+          "name": "Postgres account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Return orders based on user input us",
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "orders",
+          "mode": "list",
+          "cachedResultName": "orders"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "user_id",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', `use user id field from users db`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        560,
+        192
+      ],
+      "id": "dc195e40-a1a1-4887-9808-6696b79b5e1c",
+      "name": "Orders list",
+      "credentials": {
+        "postgres": {
+          "id": "Pl0stePkJmGF26ro",
+          "name": "Postgres account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const chatInput= $input.first().json.chatInput ?$input.first().json.chatInput : $('InputChat').first().json.chatInput \nreturn { json: { chatInput } };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        48
+      ],
+      "id": "90a8e62a-29cd-4dbe-bddd-d329a266ff26",
+      "name": "InputHolder"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- 1. Create tables (same as before)\nCREATE TABLE IF NOT EXISTS users (\n    id SERIAL PRIMARY KEY,\n    name VARCHAR(50) NOT NULL,\n    email VARCHAR(100) UNIQUE NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE TABLE IF NOT EXISTS orders (\n    id SERIAL PRIMARY KEY,\n    user_id INT REFERENCES users(id),\n    product_name VARCHAR(100) NOT NULL,\n    quantity INT NOT NULL,\n    price NUMERIC(10,2) NOT NULL,\n    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\n-- 2. Insert realistic mock users (simpler method)\nINSERT INTO users (name, email)\nVALUES\n('Pepa Novak', 'pepa.novak@example.com'),\n('Jan Horvat', 'jan.horvat@example.com'),\n('Eva Kovac', 'eva.kovac@example.com'),\n('Luka Ilic', 'luka.ilic@example.com'),\n('Maja Petrovic', 'maja.petrovic@example.com'),\n('Tom Markovic', 'tom.markovic@example.com'),\n('Sara Jovanovic', 'sara.jovanovic@example.com'),\n('Nik Stojanovic', 'nik.stojanovic@example.com'),\n('Ana Nikolic', 'ana.nikolic@example.com'),\n('David Vukovic', 'david.vukovic@example.com');\n\n-- 3. Insert random orders\n-- We'll pick a random user_id using generate_series and random()\nINSERT INTO orders (user_id, product_name, quantity, price)\nSELECT\n  (1 + floor(random()*10)::int) AS user_id,  -- random user from 1-10\n  CASE floor(random()*7)::int\n      WHEN 0 THEN 'Laptop'\n      WHEN 1 THEN 'Mouse'\n      WHEN 2 THEN 'Keyboard'\n      WHEN 3 THEN 'Monitor'\n      WHEN 4 THEN 'Headphones'\n      WHEN 5 THEN 'Webcam'\n      ELSE 'USB Cable'\n  END AS product_name,\n  (1 + floor(random()*5)::int) AS quantity,\n  round((10 + random()*500)::numeric, 2) AS price\nFROM generate_series(1, 50);\n\nSELECT * from orders;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -16,
+        -128
+      ],
+      "id": "df3bc8c5-70a9-4231-9fe9-b9758d0aaa84",
+      "name": "DefaultDataMock",
+      "credentials": {
+        "postgres": {
+          "id": "Pl0stePkJmGF26ro",
+          "name": "Postgres account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Chat": {
+      "main": [
+        [
+          {
+            "node": "InputHolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "DefaultDataMock",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "InputHolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "InputChat": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get user detail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Orders list": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "InputHolder": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DefaultDataMock": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6dbff389-2284-47a5-8b83-1b80eb1cef4d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d4d69bfb25a6c0d232d077ff52788a850e9474ba40b33e5f6bc246cbf086a076"
+  },
+  "id": "XxHO5YPxVJdNDDPl",
+  "tags": []
+}
