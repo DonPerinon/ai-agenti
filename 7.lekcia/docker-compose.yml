@@ -13,7 +13,7 @@ services:
 
   mcp:
     build:
-      context: mpcs/researcher
+      context: mcps/researcher
       dockerfile: Dockerfile
     environment:
       SERPAPI_API_KEY: your_serpapi_key_here
