@@ -1,3 +1,4 @@
+import os
 from langgraph_supervisor import create_supervisor, create_handoff_tool
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -7,11 +8,13 @@ from langgraph.prebuilt import create_react_agent
 
 llm = ChatOpenAI(model="gpt-4.1",temperature=0)  # or whichever model you use
 
+MCP_SERVER = os.getenv("MCP_SERVER_URL")
+print(MCP_SERVER)
 client = MultiServerMCPClient(
     {
         "google": {
             # Ensure you start your weather server on port 8000
-            "url": "http://localhost:8092/mcp",
+            "url": MCP_SERVER, 
             "transport": "streamable_http",
         }
     }

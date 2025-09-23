@@ -13,7 +13,7 @@ if not API_KEY:
     raise ValueError("SERPAPI_API_KEY not found in environment variables. Please set it in the .env file.")
 
 # Initialize the MCP server
-mcp = FastMCP("SerpApi MCP Server",port=8092)
+mcp = FastMCP("SerpApi MCP Server",port=8092, host="0.0.0.0")
 
 # Tool to perform searches via SerpApi
 @mcp.tool()

@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: core
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - MCP_SERVER_URL=http://mcp:8092/mcp
+
+  mcp:
+    build:
+      context: mpcs/researcher
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: app_db
