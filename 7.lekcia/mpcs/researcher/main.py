@@ -35,9 +35,8 @@ async def search(params: Dict[str, Any] = {}) -> str:
     if "q" not in params:
         return "Error: 'q' (query) parameter is required."
     try:
-        print(params)
+        #print(params) 
         search = SerpApiSearch(params)
-        print("ahoj")
         data = search.get_dict()
         print(data)
         # Process organic search results if available

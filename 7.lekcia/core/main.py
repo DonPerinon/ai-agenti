@@ -23,10 +23,8 @@ async def main():
             if user_input.lower() in ["quit", "exit", "q"]:
                 print("Goodbye!")
                 break
-            print(initial_state)
             # Add user's message to the history
             initial_state["messages"].append(("user", user_input))
-            print(initial_state)
             result=trip_graph.astream(initial_state)
             last_step = None
             async for step in result:
@@ -45,12 +43,12 @@ async def main():
                 else:
                     last_message = last_msg  # string or fallback
 
-                print("Assistant:", last_message)
+                print(last_message)
                 initial_state["messages"].append(("assistant", last_message)) 
 
-        except KeyboardInterrupt:
-            print("\n\n👋 Thanks for using the Educational Database Tools AI Agent!")
-            break
+  
+        except asyncio.CancelledError:
+            break        
         except Exception as e:
             print(f"\n❌ Error: {e}")
             print("Please try again or type 'quit' to exit.")
@@ -63,4 +61,8 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except (KeyboardInterrupt,asyncio.exceptions.CancelledError):
+        print("\n\n👋 Thanks for using the Educational Database Tools AI Agent!")
+        
