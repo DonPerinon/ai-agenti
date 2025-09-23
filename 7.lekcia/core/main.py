@@ -9,7 +9,7 @@ from shared.state import GraphState
 from graphs.graph import trip_graph
 async def main():
 
-    messages = [] # <--------------------------------------------------------- Store chat history
+    messages = [] 
     initial_state: GraphState = {
     "messages": [],
 

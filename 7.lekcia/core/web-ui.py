@@ -12,7 +12,7 @@ from graphs.graph import trip_graph
 import asyncio
 
 print("Starting web server...")
-print(os.getenv("OPENAI_API_KEY"))
+
 app = FastAPI()
 
 app.add_middleware(
