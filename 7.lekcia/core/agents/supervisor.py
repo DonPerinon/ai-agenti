@@ -10,11 +10,6 @@ def transfer_to_researcher():
     """Transfer the task to the researcher."""
     return {"next": "researcher"}
 
-@tool("transfer_to_coder", description="Ask the coder for help.")
-def transfer_to_coder():
-    """Transfer the task to the coder."""
-    return {"next": "coder"}
-
 @tool("transfer_to_speaker", description="Trasfer message to user.")
 def transfer_to_speaker():
     """Trasfer message to user."""

@@ -13,7 +13,7 @@ print(MCP_SERVER)
 client = MultiServerMCPClient(
     {
         "google": {
-            # Ensure you start your weather server on port 8000
+            # Ensure you start mcp server before running this code
             "url": MCP_SERVER, 
             "transport": "streamable_http",
         }
