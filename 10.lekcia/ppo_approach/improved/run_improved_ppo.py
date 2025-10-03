@@ -3,14 +3,21 @@
 Improved PPO Agent Runner - Test improved agent on any goal position
 Usage: python run_improved_ppo.py [goal_x] [goal_y] [--exploration]
 """
-
+import os
 import sys
 import torch
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
-from grid_env import GridWorldEnv
+
+# Get the absolute path to the parent directory of the script
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+# Add BASE_DIR to sys.path if not already present
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+from shared.grid_env import GridWorldEnv
 from improved_ppo_agent import ImprovedPPOAgent
 import os
 
@@ -110,7 +117,7 @@ def compare_with_old_agent(improved_agent, env, goals):
     print(f"\n📊 Comparing with Original PPO Behavior")
     print("-" * 50)
 
-    from ppo_agent import PPOAgent
+    from shared.ppo_agent import PPOAgent
 
     # Try to load old agent
     old_agent = PPOAgent(15, 4)

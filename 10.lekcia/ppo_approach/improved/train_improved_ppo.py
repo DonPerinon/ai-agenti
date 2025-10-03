@@ -3,13 +3,21 @@
 Training script for Improved PPO Agent
 """
 
+import os
+import sys
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
-from grid_env import GridWorldEnv
+# Get the absolute path to the parent directory of the script
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+# Add BASE_DIR to sys.path if not already present
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
+from shared.grid_env import GridWorldEnv
 from improved_ppo_agent import ImprovedPPOAgent
-import os
 
 
 def plot_training_results(rewards, lengths, save_path="ppo_approach/improved_ppo_training.png"):

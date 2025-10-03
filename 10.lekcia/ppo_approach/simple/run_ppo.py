@@ -10,8 +10,8 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
-from grid_env import GridWorldEnv
-from ppo_agent import PPOAgent
+from shared.grid_env import GridWorldEnv
+from shared.ppo_agent import PPOAgent
 import os
 
 
