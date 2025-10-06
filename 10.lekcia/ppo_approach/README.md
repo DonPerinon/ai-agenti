@@ -224,7 +224,6 @@ uv run improved/run_improved_ppo.py 7 7
 ## 📚 References
 
 - [Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347)
-- [OpenAI Gym Documentation](https://gym.openai.com/)
 - [PyTorch RL Tutorial](https://docs.pytorch.org/tutorials/intermediate/reinforcement_ppo.html)
 
 ## 📄 License
