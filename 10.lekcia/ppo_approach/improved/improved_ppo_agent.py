@@ -386,7 +386,7 @@ class ImprovedPPOAgent:
             if visualize and episode == 0:
                 fig, ax = env.visualize(path)
                 fig.suptitle(f'Improved PPO Agent - Goal {goal} (Episode 1)', fontsize=16)
-                fig.savefig(f'ppo_approach/improved_ppo_test_{goal[0]}_{goal[1]}.png',
+                fig.savefig(f'visualizations/improved_ppo_test_{goal[0]}_{goal[1]}.png',
                            dpi=150, bbox_inches='tight')
                 plt.close(fig)
 

@@ -71,7 +71,7 @@ If no coordinates are provided, it defaults to goal `(5, 7)`.
 ## 📊 Features
 - **Custom GridWorld** with obstacles and rewards.  
 - **Robust PPO training** with domain randomization.  
-- **Visualization**: Generates PNG plots of the agent’s navigation path (saved in `ppo_approach/`).  
+- **Visualization**: Generates PNG plots of the agent’s navigation path (saved in `visualizations/`).  
 - **Testing multiple goals**: Evaluate agent adaptability across different targets.  
 
 ---
@@ -80,5 +80,5 @@ If no coordinates are provided, it defaults to goal `(5, 7)`.
 - Terminal shows step-by-step actions and rewards.
 - A path visualization is saved, e.g.:
   ```
-  ppo_approach/ppo_demo_5_7.png
+  visualizations/ppo_demo_5_7.png
   ```

@@ -20,7 +20,7 @@ from shared.grid_env import GridWorldEnv
 from improved_ppo_agent import ImprovedPPOAgent
 
 
-def plot_training_results(rewards, lengths, save_path="ppo_approach/improved_ppo_training.png"):
+def plot_training_results(rewards, lengths, save_path="visualizations/improved_ppo_training.png"):
     """Plot and save training progress"""
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
 

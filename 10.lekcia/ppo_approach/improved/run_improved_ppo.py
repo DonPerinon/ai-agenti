@@ -200,7 +200,7 @@ def main():
     fig, ax = env.visualize(path)
     mode_str = " (with exploration)" if use_exploration else ""
     fig.suptitle(f'Improved PPO Agent Navigation to {goal}{mode_str}', fontsize=16)
-    filename = f'ppo_approach/improved_ppo_demo_{goal[0]}_{goal[1]}.png'
+    filename = f'visualizations/improved_ppo_demo_{goal[0]}_{goal[1]}.png'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     fig.savefig(filename, dpi=150, bbox_inches='tight')
     print(f"Visualization saved to '{filename}'")

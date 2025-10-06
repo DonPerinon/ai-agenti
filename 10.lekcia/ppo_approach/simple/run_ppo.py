@@ -86,7 +86,7 @@ def test_multiple_goals(agent, env, goals):
         # Visualize path
         fig, ax = env.visualize(path)
         fig.suptitle(f'PPO Agent - Goal {goal}', fontsize=16)
-        filename = f'ppo_approach/ppo_goal_{goal[0]}_{goal[1]}.png'
+        filename = f'visualizations/ppo_goal_{goal[0]}_{goal[1]}.png'
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         fig.savefig(filename, dpi=150, bbox_inches='tight')
         plt.close(fig)
@@ -152,7 +152,7 @@ def main():
     print(f"\n🗺️  Generating visualization...")
     fig, ax = env.visualize(path)
     fig.suptitle(f'PPO Agent Navigation to {goal}', fontsize=16)
-    filename = f'ppo_approach/ppo_demo_{goal[0]}_{goal[1]}.png'
+    filename = f'visualizations/ppo_demo_{goal[0]}_{goal[1]}.png'
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     fig.savefig(filename, dpi=150, bbox_inches='tight')
     print(f"Visualization saved to '{filename}'")
